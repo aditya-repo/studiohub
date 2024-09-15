@@ -26,7 +26,7 @@ const Header = () => {
         <div className="flex justify-between items-center p-2 bg-white">
             <div className='flex'>
             <div className='w-20'></div>
-            <div className="text-2xl">ADMIN PANEL</div>
+            <div className="text-xl">Studio Hub</div>
             </div>
             <div className="flex items-center mr-5">
                 <div className='mr-6'>
