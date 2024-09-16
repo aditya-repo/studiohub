@@ -24,8 +24,9 @@ const Header = () => {
 
     return (
         <div className="flex justify-between items-center p-2 bg-white">
-            <div className='flex'>
+            <div className='flex items-center'>
             <div className='w-20'></div>
+            <div className='w-8 h-8 rounded-full bg-gray-600 me-2'></div>
             <div className="text-xl">Studio Hub</div>
             </div>
             <div className="flex items-center mr-5">

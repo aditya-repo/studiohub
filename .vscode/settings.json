@@ -1,0 +1,12 @@
+{
+    "files.exclude": {
+      "node_modules": true,
+      ".git": true,
+      "*.log": true,
+      "package-lock.json": true,
+      "README.md": true,
+      "tailwind.config.js": true,
+      ".gitignore": true,
+      "public": true
+    }
+  }

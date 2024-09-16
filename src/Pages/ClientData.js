@@ -5,7 +5,7 @@ const ClientDataApi = () => {
     return (
         <div>
             <div className='flex justify-center'>
-                <div className='flex items-center gap-3 mt-5'>
+                <div className='flex items-center gap-4 sm:gap-3 mt-5 flex-wrap'>
                     <div className='rounded-full px-4 py-1 border-gray-500 border'><div>All</div></div>
                     <div className='rounded-full px-4 py-1 border-gray-500 border'><div>Barat</div></div>
                     <div className='rounded-full px-4 py-1 border-gray-500 border'><div>Varmala</div></div>

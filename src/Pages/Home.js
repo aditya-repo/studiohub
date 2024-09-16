@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "../_components/Snippet/Card";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 
 // const BASEURL = "http://localhost:4040/";
 

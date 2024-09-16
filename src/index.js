@@ -12,15 +12,22 @@ import CloudCard from './Pages/CloudUpload';
 import ALlInviteList from './Pages/Invites';
 import ClientDataApi from './Pages/ClientData';
 import ProcessUpdate from './Pages/process-update';
+import Admin from './Core/Admin';
+
+
+import AdminHome from './Admin/Home';
+import AdminInfo from './Admin/AdminInfo';
+import AdminServiceNavigation from './Core/AdminServiceNav';
+import StudioDetails from './Core/StudioDetails';
 
 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-      <>
+    <>
       <Route path='/' element={<Studio />}>
         <Route path='/' element={<Home />} />
-        <Route path='/:clientid' element={<ClientDetails/>}>
+        <Route path='/:clientid' element={<ClientDetails />}>
           <Route path='/:clientid/client-info' element={<ClientCard />} />
           <Route path='/:clientid/cloud' element={<CloudCard />} />
           <Route path='/:clientid/invites' element={<ALlInviteList />} />
@@ -28,7 +35,13 @@ const router = createBrowserRouter(
           <Route path='/:clientid/client-data' element={<ClientDataApi />} />
         </Route>
       </Route>
-      </>
+      <Route path='/admin' element={<Admin />}>
+        <Route path='/admin' element={<AdminHome />} />
+        <Route path='/admin/:studio' element={<StudioDetails />} >
+          <Route path='/admin/:studio/info' element={<AdminInfo />} />
+        </Route>
+      </Route>
+    </>
   )
 )
 

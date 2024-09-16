@@ -14,7 +14,7 @@ const CloudCard = ({ clientData }) => {
               <strong>Add New</strong>
             </h2>
             <div>
-              <span className="font-bold">Total Uploaded </span>: 28.92 GB
+              <span className="font-bold">Total Uploaded </span> : 28.92 GB
             </div>
           </div>
           <div className="my-3">

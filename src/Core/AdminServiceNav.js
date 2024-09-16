@@ -1,12 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const StudioServiceNavigation = () => {
+const AdminServiceNavigation = () => {
 
     return (
         <div className="pt-1 mb-3">
             <div className="flex flex-wrap">
-                <NavLink to={'/123456/client-info'}
+                <NavLink to={'/admin/123456/info'}
                     style={({ isActive}) => {
                         return {
                             color: isActive ? "red" : "inherit",
@@ -15,41 +15,32 @@ const StudioServiceNavigation = () => {
                     }}>
                     <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0  text-sm sm:text-base">Basic Info</div>
                 </NavLink>
-                <NavLink to={'/123456/cloud'}
+                <NavLink to={'/admin/123456/invites'}
                     style={({ isActive }) => {
                         return {
                             color: isActive ? "red" : "inherit",
                             borderBottom: isActive ? "2px solid red" : "none"
                         };
                     }}>
-                    <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0   text-sm sm:text-base">Cloud</div>
+                    <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0   text-sm sm:text-base">Client List</div>
                 </NavLink>
-                <NavLink to={'/123456/invites'}
+                <NavLink to={'/admin/123456/process-update'}
                     style={({ isActive }) => {
                         return {
                             color: isActive ? "red" : "inherit",
                             borderBottom: isActive ? "2px solid red" : "none"
                         };
                     }}>
-                    <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0   text-sm sm:text-base">Invitation Card</div>
+                    <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0   text-sm sm:text-base">Credit</div>
                 </NavLink>
-                <NavLink to={'/123456/process-update'}
+                <NavLink to={'/admin/123456/client-data'}
                     style={({ isActive }) => {
                         return {
                             color: isActive ? "red" : "inherit",
                             borderBottom: isActive ? "2px solid red" : "none"
                         };
                     }}>
-                    <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0   text-sm sm:text-base">Process Update</div>
-                </NavLink>
-                <NavLink to={'/123456/client-data'}
-                    style={({ isActive }) => {
-                        return {
-                            color: isActive ? "red" : "inherit",
-                            borderBottom: isActive ? "2px solid red" : "none"
-                        };
-                    }}>
-                    <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0   text-sm sm:text-base">Client Data</div>
+                    <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0   text-sm sm:text-base">More</div>
                 </NavLink>
             </div>
             <div style={{ borderBottom: '0.1px solid #E0E0E0' }}></div>
@@ -57,4 +48,4 @@ const StudioServiceNavigation = () => {
     );
 };
 
-export default StudioServiceNavigation;
+export default AdminServiceNavigation;

@@ -9,6 +9,7 @@ const AddNewFile = ({ onProgress }) => {
       handleUpload();
       setUploading(false);
     }
+    // eslint-disable-next-line
   }, [uploading, file]);
 
   const handleFileChange = (e) => {
