@@ -1,6 +1,5 @@
 import React from "react";
 import BasicInfo from "../_components/Details/Basic-Info";
-import ServiceInfo from "../_components/Details/Service-Info";
 import UserAccess from "../_components/Details/User-Access";
 
 // Use random data for demonstration purposes
@@ -20,21 +19,18 @@ const clientData = {
 const ClientCard = () => {
   return (
 
-    <div className="grid grid-cols-1 lg:grid-cols-9 gap-4">
-
-      <div className="lg:col-span-4">
-        <h3 className="text-xl pb-2">Basic Info</h3>
-        <BasicInfo clientData={clientData} />
-      </div>
-
-      <div className="md:col-span-3">
-        <h3 className="text-xl pb-2">Service Info</h3>
-        <ServiceInfo />
-      </div>
-
-      <div className="md:col-span-2">
-        <h3 className="text-xl pb-2">User Access</h3>
-        <UserAccess />
+    <div className="flex justify-center">
+      <div className="w-[1200px]">
+        <div className="grid grid-cols-1 lg:grid-cols-9 gap-4">
+          <div className="lg:col-span-6">
+            <h3 className="text-xl pb-2">Basic Info</h3>
+            <BasicInfo clientData={clientData} />
+          </div>
+          <div className="md:col-span-3">
+            <h3 className="text-xl pb-2">User Access</h3>
+            <UserAccess />
+          </div>
+        </div>
       </div>
     </div>
   );

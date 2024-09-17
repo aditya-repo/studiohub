@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Navigate } from 'react-router-dom';
 
 const Header = () => {
+
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken'); // Remove JWT token
+    Navigate('/login'); // Redirect to login page
+  };
+
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -50,7 +58,7 @@ const Header = () => {
                       <ul>
                         <li className="px-5 pt-2 py-1 hover:bg-gray-100 cursor-pointer">Profile</li>
                         <li className="px-5 py-1 hover:bg-gray-100 cursor-pointer">Setting</li>
-                        <li className="px-5  py-1 pb-2 hover:bg-gray-100 cursor-pointer">Logout</li>
+                        <li className="px-5  py-1 pb-2 hover:bg-gray-100 cursor-pointer" onClick={handleLogout}>Logout</li>
                       </ul>
                     </div>
                   )}

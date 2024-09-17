@@ -15,6 +15,15 @@ const StudioServiceNavigation = () => {
                     }}>
                     <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0  text-sm sm:text-base">Basic Info</div>
                 </NavLink>
+                <NavLink to={'/123456/service'}
+                    style={({ isActive }) => {
+                        return {
+                            color: isActive ? "red" : "inherit",
+                            borderBottom: isActive ? "2px solid red" : "none"
+                        };
+                    }}>
+                    <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0   text-sm sm:text-base">Service</div>
+                </NavLink>
                 <NavLink to={'/123456/cloud'}
                     style={({ isActive }) => {
                         return {

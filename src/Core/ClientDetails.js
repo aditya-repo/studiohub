@@ -1,8 +1,9 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import StudioServiceNavigation from "./StudioServiceNav";
+import AdminClientServiceNavigation from "./AdminClientServiceNav";
 
-const ClientDetails = () => {
+export const ClientDetails = () => {
 
   return (
     <div className="px-3 pb-3">
@@ -12,4 +13,14 @@ const ClientDetails = () => {
   );
 };
 
-export default ClientDetails;
+
+export const AdminClientNavigation = () => {
+
+  return (
+    <div className="px-3 pb-3">
+    <AdminClientServiceNavigation />
+          <Outlet />
+    </div>
+  );
+};
+
