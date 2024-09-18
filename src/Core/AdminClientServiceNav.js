@@ -65,7 +65,7 @@ const AdminClientServiceNavigation = () => {
                     </NavLink>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3 mb-1">
                 <NavLink to={'/admin/ADEF7/clients'}>
                     <div className="px-6 py-1 text-white sm:pb-2 sm:py-1 rounded-full   text-sm sm:text-base bg-gray-600" style={{ paddingTop: "12px !important" }}>Client List</div>
                 </NavLink>

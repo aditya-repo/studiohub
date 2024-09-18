@@ -42,18 +42,18 @@ const router = createBrowserRouter(
         <Route path=":studio" element={<StudioDetails />}>
           <Route path="info" element={<AdminInfo />} />
           <Route path="clients" element={<ClientList />} />
-          <Route path="client/:clientid" element={<AdminClientNavigation />}>
-            <Route path="client-info" element={<ClientCard />} />
-            <Route path="service" element={<ServiceCard />} />
-            <Route path="cloud" element={<CloudCard />} />
-            <Route path="invites" element={<ALlInviteList />} />
-            <Route path="process-update" element={<AdminInfo />} />
-            <Route path="client-data" element={<ClientDataApi />} />
-          </Route>
+        </Route>
+        <Route path=":studio/client/:clientid" element={<AdminClientNavigation />}>
+          <Route path="client-info" element={<ClientCard />} />
+          <Route path="service" element={<ServiceCard />} />
+          <Route path="cloud" element={<CloudCard />} />
+          <Route path="invites" element={<ALlInviteList />} />
+          <Route path="process-update" element={<AdminInfo />} />
+          <Route path="client-data" element={<ClientDataApi />} />
         </Route>
       </Route>
-      
-      <Route path="/login" element={<Login />} />
+
+      <Route path="/admin-login" element={<Login />} />
     </>
   )
 );

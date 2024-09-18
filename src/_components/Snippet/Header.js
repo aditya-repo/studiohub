@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
 
+  const Navigate = useNavigate()
 
   const handleLogout = () => {
     localStorage.removeItem('authToken'); // Remove JWT token
-    Navigate('/login'); // Redirect to login page
+    Navigate('/admin-login'); // Redirect to login page
   };
 
     const [isOpen, setIsOpen] = useState(false);

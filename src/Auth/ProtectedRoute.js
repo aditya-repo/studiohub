@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import axios from 'axios';
+import { Navigate } from 'react-router-dom';
+import axiosInstance from '../Config/axiosConfig';
+import URL from '../Config/config';
+import Admin from '../Core/Admin';
 
 const ProtectedRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = localStorage.getItem('authToken');
-        if (!token) throw new Error('No token found');
+        // The Axios instance automatically attaches the token
+        await axiosInstance.get(URL.GET_DASHBOARD_DETAILS());
 
-        // Validate JWT by sending a request to the backend
-        await axios.get('/api/admin-data', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
+        // If token is valid, set authentication state to true
         setIsAuthenticated(true);
       } catch (error) {
+        // If token is invalid or not provided, set authentication to false
         setIsAuthenticated(false);
       } finally {
+        // Finish the loading state
         setLoading(false);
       }
     };
@@ -30,15 +29,16 @@ const ProtectedRoute = () => {
     checkAuth();
   }, []);
 
+
   if (loading) {
     return <p>Loading...</p>;
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/admin-login" replace />;
   }
 
-  return <Outlet />;
+  return <Admin />;
 };
 
 export default ProtectedRoute;
