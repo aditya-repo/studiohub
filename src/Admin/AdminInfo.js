@@ -16,6 +16,7 @@ const clientData = {
 };
 
 const AdminInfo = () => {
+
   return (
 
     <div className="flex justify-center">

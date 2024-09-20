@@ -3,7 +3,6 @@ import axiosInstance from "../../Config/axiosConfig";
 import URL from "../../Config/config";
 
 const SignupForm = ({onCloseForm})=>{
-    const clientData = {}
 
 
     const [formData, setFormData] = useState({

@@ -5,23 +5,13 @@ import axiosInstance from "../Config/axiosConfig";
 import SignupForm from "./Home/SignupForm";
 import StudioCard from "./Home/StudioCard";
 
-// const BASEURL = "http://localhost:4040/";
-
 const AdminHome = () => {
 
     const [isToggled, setIsToggled] = useState(true)
 
     const [studio, setStudio] = useState([])
 
-
-    const data = [
-        { id: 1, title: "Add Client", value: 0 },
-        { id: 2, title: "Total Client", value: 25 },
-        { id: 3, title: "Current Client", value: 12 },
-        { id: 4, title: "Expired Client", value: 13 },
-    ];
-
-    
+    const [count, setCount] = useState({})
 
     useEffect(() => {
         // Define the async function to fetch data
@@ -30,9 +20,9 @@ const AdminHome = () => {
                 // Make a GET request to the API
                 const response = await axiosInstance.get(URL.GET_DASHBOARD_DETAILS());
 
-                // Set the fetched data to the state
-                
-                setStudio(response.data)
+                // Set the fetched data to the state                
+                setStudio(response.data.studios)
+                setCount(response.data.payload)
 
             } catch (err) {
                 // Handle errors
@@ -43,6 +33,13 @@ const AdminHome = () => {
         // Call the function to fetch data
         fetchData();
     }, []);
+
+    const data = [
+        { id: 1, title: "Total Studio", value: count.totalStudioCount },
+        { id: 2, title: "Active Studio", value: count.activeStudioCount },
+        { id: 3, title: "Total Client", value: count.totalClientCount },
+        { id: 4, title: "Active Client", value: count.activeClientCount },
+    ];
 
     const handleCloseForm = (child)=> {
         setIsToggled(child)
@@ -73,7 +70,6 @@ const AdminHome = () => {
                                 <h3 className="text-2xl font-bold">Studio Data</h3>
                                 <div className="bg-indigo-600 text-white px-4 py-2 rounded-full" onClick={closeForm}> {isToggled ? 'Add New' : 'Close'}</div>
                             </div>
-
                             {isToggled ? (<StudioCard studio={studio} />)
                                 :
                                 (

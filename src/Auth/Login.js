@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import URL from '../Config/config';
 
 const Login = () => {
@@ -9,22 +9,36 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    
-
     try {
       // Send login request to backend
-      const response = await axios.post(URL.LOGIN(), { username, password });
+      let response
+      if (currentPath === '/admin-login') {
+        response = await axios.post(URL.ADMIN_LOGIN(), { username, password });
+      }
+
+      if (currentPath === '/login') {
+        response = await axios.post(URL.STUDIO_LOGIN(), { username, password });
+      }
       const { token } = response.data;
 
-    console.log(response);
-      // Save JWT to localStorage
-      localStorage.setItem('authToken', token);
-
-      // Redirect to admin dashboard after successful login
-      navigate('/admin');
+      if (currentPath === '/login') {
+        // Save JWT to localStorage
+        localStorage.setItem('authToken', token);
+        navigate('/');
+      }
+      if (currentPath === '/admin-login') {
+        // Save JWT to localStorage
+        localStorage.setItem('authToken', token);
+        navigate('/admin');
+      }
     } catch (error) {
       setError('Invalid login credentials');
     }

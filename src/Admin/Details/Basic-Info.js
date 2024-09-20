@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EditModal from './Edit-Basic';
+import { useParams } from 'react-router-dom';
+import axiosInstance from '../../Config/axiosConfig';
+import URL from '../../Config/config';
 
 const BasicInfo = ({ clientData }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,6 +15,27 @@ const BasicInfo = ({ clientData }) => {
         setIsModalOpen(false);
     };
 
+
+  const [studio, setStudio] = useState({})
+
+  const { studiocode } = useParams()
+
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance(URL.GET_STUDIO_BASIC_INFO(studiocode))
+        setStudio(response.data)
+      } catch (error) {
+        console.error("Something went wrong", error)
+      }
+    }
+    fetchData()
+  }, [])
+
+  
+
     return (
         <div className="border border-gray-300 rounded-lg p-6 bg-white shadow-lg mb-5 relative">
             <button
@@ -23,17 +47,15 @@ const BasicInfo = ({ clientData }) => {
 
             <div className="px-4 py-4 sm:px-6">
                 <h3 className="text-base font-semibold leading-7 text-gray-900">
-                    {clientData.clientName}
+                    {studio.name}
                 </h3>
                 <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                    <span className="font-bold">Services:</span> Individual photography,
-                    Couples photography, Rural wedding photography, Destination wedding
-                    photography, Maternity photography.
+                    <span className="font-bold">Services:</span> {studio.description}
                 </p>
             </div>
 
             {/* Modal Component */}
-            {isModalOpen && <EditModal clientData={clientData} onClose={handleCloseModal} />}
+            {isModalOpen && <EditModal studio={studio} onClose={handleCloseModal} />}
 
             {/* Rest of the component */}
             <div className="mt-4 border-t border-gray-100">
@@ -43,34 +65,34 @@ const BasicInfo = ({ clientData }) => {
                         <div>
                             <div className="flex px-4 py-3 border-b border-gray-200">
                                 <dt className="text-sm font-medium leading-6 text-gray-900 pr-5">
-                                    Client ID :
+                                    Studio Code :
                                 </dt>
                                 <dd className="text-sm leading-6 text-gray-700">
-                                    {clientData.clientId}
+                                    {studio.studiocode}
                                 </dd>
                             </div>
                             <div className="flex px-4 py-3 border-b border-gray-200">
                                 <dt className="text-sm font-medium leading-6 text-gray-900 pr-5">
-                                    Occassion:
+                                    Manager Name:
                                 </dt>
                                 <dd className="text-sm leading-6 text-gray-700">
-                                    {clientData.projectName}
+                                    {studio.manager}
                                 </dd>
                             </div>
                             <div className="flex px-4 py-3 border-b border-gray-200">
                                 <dt className="text-sm font-medium leading-6 text-gray-900 pr-5">
-                                    Type :
+                                    Username :
                                 </dt>
                                 <dd className="text-sm leading-6 text-gray-700">
-                                    {clientData.type}
+                                    {studio.userid}
                                 </dd>
                             </div>
                             <div className="flex px-4 py-3 border-b border-gray-200">
                                 <dt className="text-sm font-medium leading-6 text-gray-900 pr-5">
-                                    Booking Date :
+                                    Location :
                                 </dt>
                                 <dd className="text-sm leading-6 text-gray-700">
-                                    {clientData.bookingDate}
+                                    {studio.location}
                                 </dd>
                             </div>
                         </div>
@@ -79,34 +101,34 @@ const BasicInfo = ({ clientData }) => {
                         <div>
                             <div className="flex px-4 py-3 border-b border-gray-200">
                                 <dt className="text-sm font-medium leading-6 text-gray-900 pr-5">
-                                    Venue :
+                                    Contact 1 :
                                 </dt>
                                 <dd className="text-sm leading-6 text-gray-700">
-                                    {clientData.venue}
+                                    {studio.contact1}
                                 </dd>
                             </div>
                             <div className="flex px-4 py-3 border-b border-gray-200">
                                 <dt className="text-sm font-medium leading-6 text-gray-900 pr-5">
-                                    Contact :
+                                    Contact 2 :
                                 </dt>
                                 <dd className="text-sm leading-6 text-gray-700">
-                                    {clientData.contact}
+                                    {studio.contact2}
                                 </dd>
                             </div>
                             <div className="flex px-4 py-3 border-b border-gray-200">
                                 <dt className="text-sm font-medium leading-6 text-gray-900 pr-5">
-                                    Address :
+                                    Whatsapp :
                                 </dt>
                                 <dd className="text-sm leading-6 text-gray-700">
-                                    {clientData.address}
+                                    {studio.whatsapp}
                                 </dd>
                             </div>
                             <div className="flex px-4 py-3 border-b border-gray-200">
                                 <dt className="text-sm font-medium leading-6 text-gray-900 pr-5">
-                                    Date :
+                                    Email :
                                 </dt>
                                 <dd className="text-sm leading-6 text-gray-700">
-                                    {clientData.date}
+                                    {studio.email}
                                 </dd>
                             </div>
                         </div>

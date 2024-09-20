@@ -1,7 +1,9 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 
 const AdminClientServiceNavigation = () => {
+
+    const {paramter} = useParams()
 
     const stepback = useNavigate()
 
@@ -9,7 +11,7 @@ const AdminClientServiceNavigation = () => {
         <div className="pt-1 mb-3">
             <div className="flex justify-between" >
                 <div className="flex flex-wrap">
-                    <NavLink to={'/admin/SHNOW4/client/123456/client-info'}
+                    <NavLink to={`/admin/SHNOW4/client/123456/client-info`}
                         style={({ isActive }) => {
                             return {
                                 color: isActive ? "red" : "inherit",

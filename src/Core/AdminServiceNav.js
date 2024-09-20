@@ -1,14 +1,16 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 const AdminServiceNavigation = () => {
+
+    const {studiocode} = useParams()
 
     return (
         <div className="pt-1 mb-3">
             <div className="flex justify-between">
 
                 <div className="flex flex-wrap items-center">
-                    <NavLink to={'/admin/123456/info'}
+                    <NavLink to={`/admin/${studiocode}/info`}
                         style={({ isActive }) => {
                             return {
                                 color: isActive ? "red" : "inherit",
@@ -17,7 +19,7 @@ const AdminServiceNavigation = () => {
                         }}>
                         <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0  text-sm sm:text-base">Basic Info</div>
                     </NavLink>
-                    <NavLink to={'/admin/123456/clients'}
+                    <NavLink to={`/admin/${studiocode}/clients`}
                         style={({ isActive }) => {
                             return {
                                 color: isActive ? "red" : "inherit",
@@ -26,7 +28,7 @@ const AdminServiceNavigation = () => {
                         }}>
                         <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0   text-sm sm:text-base">Client List</div>
                     </NavLink>
-                    <NavLink to={'/admin/123456/process-update'}
+                    <NavLink to={`/admin/${studiocode}/process-update`}
                         style={({ isActive }) => {
                             return {
                                 color: isActive ? "red" : "inherit",
@@ -35,7 +37,7 @@ const AdminServiceNavigation = () => {
                         }}>
                         <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0   text-sm sm:text-base">Transaction</div>
                     </NavLink>
-                    <NavLink to={'/admin/123456/client-data'}
+                    <NavLink to={`/admin/${studiocode}/client-data`}
                         style={({ isActive }) => {
                             return {
                                 color: isActive ? "red" : "inherit",
@@ -47,7 +49,7 @@ const AdminServiceNavigation = () => {
                 </div>
                 
                 <div className="flex flex-wrap">
-                    <NavLink to={'/admin/123456/client-data'}
+                    <NavLink to={`/admin/${studiocode}/client-data`}
                         style={({ isActive }) => {
                             return {
                                 color: isActive ? "red" : "inherit",

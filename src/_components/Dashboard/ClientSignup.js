@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import axiosInstance from '../../Config/axiosConfig';
 import URL from '../../Config/config';
 
-const EditModal = ({ studio, onClose }) => {
-  const [formData, setFormData] = useState(studio);  
+const ClinetSignup = ({ onClose }) => {
+  const [formData, setFormData] = useState({});  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,7 +21,7 @@ const EditModal = ({ studio, onClose }) => {
       console.log('Form submitted:', formData);
   
       const response = await axiosInstance.post(
-        URL.POST_STUDIO_BASIC_INFO(studio.studiocode),
+        URL.POST_STUDIO_BASIC_INFO(),
         formData // Send formData directly
       );
       
@@ -34,8 +34,9 @@ const EditModal = ({ studio, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-75 p-2">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl">
+    <div className='flex justify-center items-center'>
+    
+      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl w-[1000px]">
         <div className='flex justify-between'>
           <h2 className="text-lg font-semibold mb-4">Edit Studio Information</h2>
           <div className='px-2 cursor-pointer' onClick={onClose}>&#x274c;</div>
@@ -45,41 +46,31 @@ const EditModal = ({ studio, onClose }) => {
             {/* Left Column */}
             <div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Studio Code</label>
+                <label className="block text-sm font-medium text-gray-700">Client Name</label>
                 <input
                   type="text"
-                  name="studiocode"
-                  value={formData.studiocode || ''}
+                  name="clientName"
+                  value={formData.clientName}
                   onChange={handleInputChange}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Manager Name</label>
+                <label className="block text-sm font-medium text-gray-700">Occasion</label>
                 <input
                   type="text"
-                  name="manager"
-                  value={formData.manager || ''}
+                  name="projectName"
+                  value={formData.projectName}
                   onChange={handleInputChange}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">User ID</label>
+              <div className="">
+                <label className="block text-sm font-medium text-gray-700">Type</label>
                 <input
                   type="text"
-                  name="userid"
-                  value={formData.userid || ''}
-                  onChange={handleInputChange}
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Location</label>
-                <input
-                  type="text"
-                  name="location"
-                  value={formData.location || ''}
+                  name="type"
+                  value={formData.type}
                   onChange={handleInputChange}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
@@ -89,56 +80,47 @@ const EditModal = ({ studio, onClose }) => {
             {/* Right Column */}
             <div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Contact 1</label>
+                <label className="block text-sm font-medium text-gray-700">Booking Date</label>
                 <input
-                  type="text"
-                  name="contact1"
-                  value={formData.contact1 || ''}
+                  type="date"
+                  name="bookingDate"
+                  value={formData.bookingDate}
                   onChange={handleInputChange}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Contact 2</label>
+                <label className="block text-sm font-medium text-gray-700">Venue</label>
                 <input
                   type="text"
-                  name="contact2"
-                  value={formData.contact2 || ''}
+                  name="venue"
+                  value={formData.venue}
                   onChange={handleInputChange}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Whatsapp</label>
+                <label className="block text-sm font-medium text-gray-700">Contact</label>
                 <input
                   type="text"
-                  name="whatsapp"
-                  value={formData.whatsapp || ''}
-                  onChange={handleInputChange}
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email || ''}
+                  name="contact"
+                  value={formData.contact}
                   onChange={handleInputChange}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
               </div>
             </div>
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Description</label>
-            <textarea
-              name="description"
-              value={formData.description || ''}
-              onChange={handleInputChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            ></textarea>
-          </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Address</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                />
+              </div>
 
           <div className="flex justify-end mt-6">
             <button
@@ -161,4 +143,4 @@ const EditModal = ({ studio, onClose }) => {
   );
 };
 
-export default EditModal;
+export default ClinetSignup;

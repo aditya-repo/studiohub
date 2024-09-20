@@ -1,19 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../_components/Snippet/Card";
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import axiosStudioInstance from "../Config/axiosStudioConfig";
+import URL from "../Config/config";
+import ClientTable from "../_components/Dashboard/ClientTable";
+import ClinetSignup from "../_components/Dashboard/ClientSignup";
 
 // const BASEURL = "http://localhost:4040/";
 
 const Home = () => {
 
+  const [isActive, setIsActive] = useState(true)
+  const [dashboard, getDashboard] = useState()
+
   const data = [
-    { id: 1, title: "Add Client", value: 0 },
+    { id: 1, title: "Credit", value: 0 },
     { id: 2, title: "Total Client", value: 25 },
     { id: 3, title: "Current Client", value: 12 },
     { id: 4, title: "Expired Client", value: 13 },
   ];
 
-  // console.log(student);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosStudioInstance.get(URL.GET_STUDIO_DASHBOARD())
+        getDashboard(response.data)
+      } catch (error) {
+        console.error("Something went wrong", error)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  console.log(dashboard);
+  
+  const closeForm = () => {
+    setIsActive(prevState => !prevState);
+  };
 
   return (
     <div className="p-4">
@@ -27,67 +51,12 @@ const Home = () => {
 
       <div className="grid grid-cols-1 gap-4">
         <div className="p-4 shadow rounded-md border bg-gray-200 ">
-          <h3 className="text-2xl font-bold mb-3">Client Data</h3>
-
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-2xl font-bold">Client Data</h3>
+          <div className="py-2 px-5 bg-indigo-600 rounded-full text-white" onClick={closeForm}>{isActive ? ("Add Client"): ("Close Form")}</div>
+        </div>
           <div className="overflow-x-auto">
-            <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-              <thead className="bg-gray-500 border-b">
-                <tr>
-                  <th className="py-3 px-6 text-left text-sm font-medium text-white w-[10%]">
-                    Client ID
-                  </th>
-                  <th className="py-3 px-6 text-left text-sm font-medium text-white">
-                    Project Name
-                  </th>
-                  <th className="py-3 px-6 text-left text-sm font-medium text-white w-[12%]">
-                    Type
-                  </th>
-                  <th className="py-3 px-6 text-left text-sm font-medium text-white w-[10%]">
-                    Date
-                  </th>
-                  <th className="py-3 px-6 text-left text-sm font-medium text-white w-[10%]">
-                    Client Name
-                  </th>
-                  <th className="py-3 px-6 text-left text-sm font-medium text-white w-[15%]">
-                    Address
-                  </th>
-                  <th className="py-3 px-6 text-left text-sm font-medium text-white w-[8%]">
-                    Contact
-                  </th>
-                  <th className="py-3 px-6 text-left text-sm font-medium text-white w-[10%]">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="py-2 px-6 text-sm text-gray-700">894390</td>
-                  <td className="py-2 px-6 text-sm text-gray-700">
-                    Punam Weds Pankaj
-                  </td>
-                  <td className="py-2 px-6 text-sm text-gray-700">Wedding</td>
-                  <td className="py-2 px-6 text-sm text-gray-700">
-                    12-06-2023
-                  </td>
-                  <td className="py-2 px-6 text-sm text-gray-700">
-                    Aditya Raj
-                  </td>
-                  <td className="py-2 px-6 text-sm text-gray-700">
-                    70 Feet Road, Patna - 800002
-                  </td>
-                  <td className="py-2 px-6 text-sm text-gray-700">
-                    7050020659
-                  </td>
-                  <td className="py-2 px-6 text-sm text-gray-700">
-                    <NavLink to={`/123456/client-info`}>
-                      <button className="rounded-md py-2 ring-2 ring-red-300 ring-inset bg-red-800 px-4 text-white">
-                        View
-                      </button>
-                    </NavLink>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+              {isActive ? (<ClientTable />) : (<ClinetSignup />)}
           </div>
         </div>
       </div>

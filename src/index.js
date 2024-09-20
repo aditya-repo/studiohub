@@ -18,13 +18,14 @@ import ServiceCard from './Pages/Service';
 import ClientList from './Admin/ClientList';
 import ProtectedRoute from './Auth/ProtectedRoute';
 import Login from './Auth/Login';
+import ProtectedStudioRoute from './Auth/ProtectedStudioRoute';
 
 // Creating the router structure using React Router v6
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       {/* Main route with Studio layout */}
-      <Route path="/" element={<Studio />}>
+      <Route path="/" element={<ProtectedStudioRoute />}>
         <Route index element={<Home />} />
         <Route path=":clientid" element={<ClientDetails />}>
           <Route path="client-info" element={<ClientCard />} />
@@ -39,7 +40,7 @@ const router = createBrowserRouter(
       {/* Admin routes with nested paths for managing studios and clients */}
       <Route path="/admin" element={<ProtectedRoute />}>
         <Route index element={<AdminHome />} />
-        <Route path=":studio" element={<StudioDetails />}>
+        <Route path=":studiocode" element={<StudioDetails />}>
           <Route path="info" element={<AdminInfo />} />
           <Route path="clients" element={<ClientList />} />
         </Route>
@@ -54,6 +55,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="/admin-login" element={<Login />} />
+      <Route path="/login" element={<Login />} />
     </>
   )
 );
