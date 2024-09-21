@@ -12,6 +12,9 @@ const BasicInfo = ({ clientData }) => {
         setIsModalOpen(false);
     };
 
+    console.log(clientData);
+    
+
     return (
         <div className="border border-gray-300 rounded-lg p-6 bg-white shadow-lg mb-5 relative">
             <button
@@ -23,12 +26,10 @@ const BasicInfo = ({ clientData }) => {
 
             <div className="px-4 py-4 sm:px-6">
                 <h3 className="text-base font-semibold leading-7 text-gray-900">
-                    {clientData.clientName}
+                    {clientData.clientname}
                 </h3>
                 <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                    <span className="font-bold">Services:</span> Individual photography,
-                    Couples photography, Rural wedding photography, Destination wedding
-                    photography, Maternity photography.
+                    <span className="font-bold">Services:</span> {clientData.description}
                 </p>
             </div>
 
@@ -54,7 +55,7 @@ const BasicInfo = ({ clientData }) => {
                                     Occassion:
                                 </dt>
                                 <dd className="text-sm leading-6 text-gray-700">
-                                    {clientData.projectName}
+                                    {clientData.occassionname}
                                 </dd>
                             </div>
                             <div className="flex px-4 py-3 border-b border-gray-200">
@@ -62,7 +63,7 @@ const BasicInfo = ({ clientData }) => {
                                     Type :
                                 </dt>
                                 <dd className="text-sm leading-6 text-gray-700">
-                                    {clientData.type}
+                                    {clientData.occassiontype}
                                 </dd>
                             </div>
                             <div className="flex px-4 py-3 border-b border-gray-200">
@@ -70,7 +71,7 @@ const BasicInfo = ({ clientData }) => {
                                     Booking Date :
                                 </dt>
                                 <dd className="text-sm leading-6 text-gray-700">
-                                    {clientData.bookingDate}
+                                    {clientData.occassiondate}
                                 </dd>
                             </div>
                         </div>

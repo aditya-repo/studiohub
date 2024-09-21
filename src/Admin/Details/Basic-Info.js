@@ -32,7 +32,7 @@ const BasicInfo = ({ clientData }) => {
       }
     }
     fetchData()
-  }, [])
+  }, [studiocode, isModalOpen])
 
   
 

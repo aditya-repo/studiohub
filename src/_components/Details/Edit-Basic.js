@@ -11,6 +11,8 @@ const EditModal = ({ clientData, onClose }) => {
     });
   };
 
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission logic (e.g., send data to the server)
@@ -21,12 +23,11 @@ const EditModal = ({ clientData, onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-75 p-2">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl">
-      <div className='flex justify-between'>
-      
-        <h2 className="text-lg font-semibold mb-4">Edit Client Information</h2>
-        <div className='px-2'
-              onClick={onClose}>&#x274c;</div>
-      </div>
+        <div className='flex justify-between'>
+          <h2 className="text-lg font-semibold mb-4">Edit Client Information</h2>
+          <div className='px-2'
+            onClick={onClose}>&#x274c;</div>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Left Column */}
@@ -97,16 +98,16 @@ const EditModal = ({ clientData, onClose }) => {
               </div>
             </div>
           </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Address</label>
-                <input
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                />
-              </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Address</label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleInputChange}
+              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+            />
+          </div>
 
           <div className="flex justify-end mt-6">
             <button

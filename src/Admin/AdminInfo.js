@@ -1,6 +1,7 @@
 import React from "react";
 import BasicInfo from "./Details/Basic-Info";
 import Card from "../_components/Snippet/Card";
+import CreditCard from "../_components/Snippet/CreditCard";
 
 // Use random data for demonstration purposes
 const clientData = {
@@ -30,7 +31,7 @@ const AdminInfo = () => {
 
           <div className="lg:col-span-3">
             <h3 className="text-xl pb-2">Credit Info</h3>
-            <Card data={{ title: "Total Credit", value: 5 }} />
+            <CreditCard />
           </div>
         </div>
       </div>

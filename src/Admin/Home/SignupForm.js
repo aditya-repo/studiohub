@@ -17,24 +17,13 @@ const SignupForm = ({onCloseForm})=>{
         email: ''
     });
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Handle form submission logic (e.g., send data to the server)
         console.log('Form submitted:', formData);
 
-        const response = await axiosInstance.post(URL.POST_STUDIO_SIGNUP(), {formData})
-
-        console.log(response);
-        
-
+        await axiosInstance.post(URL.POST_STUDIO_SIGNUP(), {formData})
         onCloseForm(true);
     };
 

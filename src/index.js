@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
-import Studio from './Core/Studio';
+// import Studio from './Core/Studio';
 import Home from './Pages/Home';
 
 import './index.css';

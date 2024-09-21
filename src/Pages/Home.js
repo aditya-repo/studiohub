@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Card from "../_components/Snippet/Card";
-import { NavLink } from "react-router-dom";
 import axiosStudioInstance from "../Config/axiosStudioConfig";
 import URL from "../Config/config";
 import ClientTable from "../_components/Dashboard/ClientTable";
