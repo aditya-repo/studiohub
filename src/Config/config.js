@@ -22,11 +22,14 @@ const URL = {
   GET_DELETED_CLIENT: () => `${BASE}/studio/clients`,
 
   GET_SINGLE_CLIENT: (clientid) => `${BASE}/studio/client/${clientid}`,
-  POST_SINGLE_CLIENT: (studiocode) => `${BASE}/studio/client/${studiocode}`,
+  POST_CREATE_SINGLE_CLIENT: () => `${BASE}/studio/client`,
+  POST_UPDATE_SINGLE_CLIENT: (clientid) => `${BASE}/studio/client/${clientid}`,
   DELETE_SINGLE_CLIENT: (studiocode) => `${BASE}/studio/client/${studiocode}`,
 
   GET_PRO_USERS: (studiocode) => `${BASE}/prouser/${studiocode}`,
   DELETE_PRO_USER: (studiocode) => `${BASE}/prouser/${studiocode}`,
+  GET_CLIENT_SERVICE: (clientid) => `${BASE}/studio/service/${clientid}`,
+  POST_CREATE_SINGLE_CLIENT_SERVICE: (clientid) => `${BASE}/studio/service/${clientid}`,
 
 
   // Admin Routes
@@ -36,6 +39,10 @@ const URL = {
   GET_ADMIN_SINGLE_CLIENT: (clientid) => `${BASE}/admin/client/${clientid}`,
   GET_ADMIN_SINGLE_STUDIO_CREDIT: (studiocode) => `${BASE}/admin/${studiocode}/wallet`,
   POST_ADMIN_SINGLE_STUDIO_CREDIT: (studiocode) => `${BASE}/admin/${studiocode}/wallet`,
+  GET_ADMIN_SINGLE_STUDIO_TRANSACTION: (studiocode) => `${BASE}/admin/${studiocode}/transaction`,
+
+  GET_PUBLIC: (clientid) => `${BASE}/studio/public/${clientid}`,
+
 
 };
 

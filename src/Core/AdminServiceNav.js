@@ -28,7 +28,7 @@ const AdminServiceNavigation = () => {
                         }}>
                         <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0   text-sm sm:text-base">Client List</div>
                     </NavLink>
-                    <NavLink to={`/admin/${studiocode}/process-update`}
+                    <NavLink to={`/admin/${studiocode}/transaction`}
                         style={({ isActive }) => {
                             return {
                                 color: isActive ? "red" : "inherit",
@@ -37,7 +37,7 @@ const AdminServiceNavigation = () => {
                         }}>
                         <div className="px-6 pb-3 sm:pb-2 pt-3 sm:pt-0   text-sm sm:text-base">Transaction</div>
                     </NavLink>
-                    <NavLink to={`/admin/${studiocode}/client-data`}
+                    <NavLink to={`/admin/${studiocode}/transaction`}
                         style={({ isActive }) => {
                             return {
                                 color: isActive ? "red" : "inherit",

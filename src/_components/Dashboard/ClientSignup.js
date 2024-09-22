@@ -21,7 +21,7 @@ const ClinetSignup = ({ onClose }) => {
       console.log('Form submitted:', formData);
   
       const response = await axiosInstance.post(
-        URL.POST_STUDIO_BASIC_INFO(),
+        URL.POST_CREATE_SINGLE_CLIENT(),
         formData // Send formData directly
       );
       

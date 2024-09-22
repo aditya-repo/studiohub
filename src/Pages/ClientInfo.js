@@ -6,25 +6,13 @@ import axiosInstance from "../Config/axiosConfig";
 import URL from "../Config/config";
 import axiosStudioInstance from "../Config/axiosStudioConfig";
 
-// Use random data for demonstration purposes
-const clientData = {
-  clientId: "894390",
-  projectName: "Punam Weds Pankaj",
-  type: "Wedding",
-  bookingdate: "19-07-2023",
-  date: "12-06-2023",
-  clientName: "Aditya Raj",
-  address: "70 Feet Road, Patna - 800002",
-  contact: "7050020659",
-  venue: "Patliputra Marriage Lawn",
-};
-
 
 const ClientCard = () => {
 
   const {clientid, studio} = useParams()
 
   const [studiodata, setStudiodata] = useState({})
+  
 
   useEffect(()=>{
     const fetchData = async ()=>{
@@ -40,10 +28,7 @@ const ClientCard = () => {
       return 
     }
     fetchData()
-  }, [clientid])
-
-  console.log(studiodata);
-  
+  }, [clientid, studio])
 
   return (
     <div className="flex justify-center">

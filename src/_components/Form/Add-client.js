@@ -3,7 +3,7 @@ import axiosInstance from '../../Config/axiosConfig';
 import URL from '../../Config/config';
 import { useParams } from 'react-router-dom';
 
-const AddClientForm = ({onClose}) => {
+const AddClientForm = ({onCloseForm}) => {
 
     const {studiocode} = useParams()
 
@@ -23,8 +23,8 @@ const AddClientForm = ({onClose}) => {
         e.preventDefault();
         // Handle form submission logic (e.g., send data to the server)
         console.log('Form submitted:', formData);
-        await axiosInstance.post(URL.POST_ADMIN_NEW_CLIENT(studiocode), {formData})
-        onClose(true);
+        // await axiosInstance.post(URL.POST_ADMIN_NEW_CLIENT(studiocode), {formData})
+        onCloseForm(true);
     };
 
     const handleInputChange = (e) => {
@@ -37,7 +37,7 @@ const AddClientForm = ({onClose}) => {
             <div className='flex justify-between'>
                 <h2 className="text-lg font-semibold mb-4">Edit Client Information</h2>
                 <div className='px-2'
-                    onClick={onClose}>&#x274c;</div>
+                    onClick={onCloseForm}>&#x274c;</div>
             </div>
             <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -123,7 +123,7 @@ const AddClientForm = ({onClose}) => {
                 <div className="flex justify-end mt-6">
                     <button
                         type="button"
-                        onClick={onClose}
+                        onClick={onCloseForm}
                         className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2"
                     >
                         Cancel

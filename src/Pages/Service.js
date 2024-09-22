@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import ServiceInfo from "../_components/Details/Service-Info";
 
 const SerivceCard = () => {
-  return (
 
+  return (
     <div className="flex justify-center">
       <div className="w-[1100px]">
         <div className="grid grid-cols-1 lg:grid-cols-9 gap-4">

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import URL from '../../Config/config';
+import axiosInstance from '../../Config/axiosConfig';
 
 const EditModal = ({ clientData, onClose }) => {
   const [formData, setFormData] = useState(clientData);
@@ -11,13 +13,22 @@ const EditModal = ({ clientData, onClose }) => {
     });
   };
 
+  console.log(formData);
+  
   
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission logic (e.g., send data to the server)
     console.log('Form submitted:', formData);
-    onClose(); // Close modal after submission
+    const response = await axiosInstance.post(
+      URL.POST_UPDATE_SINGLE_CLIENT(formData.clientId),
+      formData // Send formData directly
+    );
+
+    setFormData(response.data)
+    
+    onClose(false); // Close modal after submission
   };
 
   return (
@@ -37,17 +48,17 @@ const EditModal = ({ clientData, onClose }) => {
                 <input
                   type="text"
                   name="clientName"
-                  value={formData.clientName}
+                  value={formData.clientname}
                   onChange={handleInputChange}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Occasion</label>
+                <label className="block text-sm font-medium text-gray-700">Occassion</label>
                 <input
                   type="text"
                   name="projectName"
-                  value={formData.projectName}
+                  value={formData.occassionname}
                   onChange={handleInputChange}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
@@ -57,7 +68,7 @@ const EditModal = ({ clientData, onClose }) => {
                 <input
                   type="text"
                   name="type"
-                  value={formData.type}
+                  value={formData.occassiontype}
                   onChange={handleInputChange}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
@@ -71,7 +82,7 @@ const EditModal = ({ clientData, onClose }) => {
                 <input
                   type="date"
                   name="bookingDate"
-                  value={formData.bookingDate}
+                  value={formData.occassiondate}
                   onChange={handleInputChange}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
@@ -104,6 +115,16 @@ const EditModal = ({ clientData, onClose }) => {
               type="text"
               name="address"
               value={formData.address}
+              onChange={handleInputChange}
+              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Description</label>
+            <input
+              type="text"
+              name="description"
+              value={formData.description}
               onChange={handleInputChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />

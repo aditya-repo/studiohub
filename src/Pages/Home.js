@@ -10,13 +10,15 @@ import ClinetSignup from "../_components/Dashboard/ClientSignup";
 const Home = () => {
 
   const [isActive, setIsActive] = useState(true)
-  const [dashboard, getDashboard] = useState()
+  const [dashboard, getDashboard] = useState([])
+
+  const [client, setClient] = useState([])
 
   const data = [
-    { id: 1, title: "Credit", value: 0 },
-    { id: 2, title: "Total Client", value: 25 },
-    { id: 3, title: "Current Client", value: 12 },
-    { id: 4, title: "Expired Client", value: 13 },
+    { id: 1, title: "Credit", value: dashboard.credit },
+    { id: 2, title: "Total Client", value: dashboard.totalClient },
+    { id: 3, title: "Current Client", value: dashboard.activeClient },
+    { id: 4, title: "Expired Client", value: "Not Workin" },
   ];
 
   useEffect(() => {
@@ -24,6 +26,7 @@ const Home = () => {
       try {
         const response = await axiosStudioInstance.get(URL.GET_STUDIO_DASHBOARD())
         getDashboard(response.data)
+        setClient(response.data.clientdetail)
       } catch (error) {
         console.error("Something went wrong", error)
       }
@@ -31,8 +34,6 @@ const Home = () => {
 
     fetchData()
   }, [])
-
-  console.log(dashboard);
   
   const closeForm = () => {
     setIsActive(prevState => !prevState);
@@ -55,7 +56,7 @@ const Home = () => {
           <div className="py-2 px-5 bg-indigo-600 rounded-full text-white" onClick={closeForm}>{isActive ? ("Add Client"): ("Close Form")}</div>
         </div>
           <div className="overflow-x-auto">
-              {isActive ? (<ClientTable />) : (<ClinetSignup />)}
+              {isActive ? (<ClientTable client={client} />) : (<ClinetSignup />)}
           </div>
         </div>
       </div>

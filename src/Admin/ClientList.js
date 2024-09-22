@@ -45,7 +45,7 @@ const ClientList = () => {
           </div>
           {openForm ? (
             <div className="flex justify-center">
-              <AddClientForm onClose={formStatus} />
+              <AddClientForm onCloseForm={formStatus} />
             </div>
           ) : (
               formdata.map((data, index) => (

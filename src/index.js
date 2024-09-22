@@ -19,6 +19,7 @@ import ClientList from './Admin/ClientList';
 import ProtectedRoute from './Auth/ProtectedRoute';
 import Login from './Auth/Login';
 import ProtectedStudioRoute from './Auth/ProtectedStudioRoute';
+import Transaction from './Admin/Transaction';
 
 // Creating the router structure using React Router v6
 const router = createBrowserRouter(
@@ -43,6 +44,7 @@ const router = createBrowserRouter(
         <Route path=":studiocode" element={<StudioDetails />}>
           <Route path="info" element={<AdminInfo />} />
           <Route path="clients" element={<ClientList />} />
+          <Route path="transaction" element={<Transaction />} />
         </Route>
         <Route path=":studio/client/:clientid" element={<AdminClientNavigation />}>
           <Route path="client-info" element={<ClientCard />} />
