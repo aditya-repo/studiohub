@@ -29,14 +29,14 @@ const Login = () => {
       }
       const { token } = response.data;
 
+        localStorage.setItem('authToken', token);
+        
       if (currentPath === '/login') {
         // Save JWT to localStorage
-        localStorage.setItem('authToken', token);
         navigate('/');
       }
       if (currentPath === '/admin-login') {
         // Save JWT to localStorage
-        localStorage.setItem('authToken', token);
         navigate('/admin');
       }
     } catch (error) {

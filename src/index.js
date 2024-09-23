@@ -17,7 +17,7 @@ import StudioDetails from './Core/StudioDetails';
 import ServiceCard from './Pages/Service';
 import ClientList from './Admin/ClientList';
 import ProtectedRoute from './Auth/ProtectedRoute';
-import Login from './Auth/Login';
+import Login from './Auth/Login2';
 import ProtectedStudioRoute from './Auth/ProtectedStudioRoute';
 import Transaction from './Admin/Transaction';
 

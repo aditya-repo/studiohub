@@ -1,47 +1,54 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import axiosInstance from '../../Config/axiosConfig';
 import URL from '../../Config/config';
 
-const ClinetSignup = ({ onClose }) => {
-  const [formData, setFormData] = useState({});  
+const ClientSignup = ({ onClose }) => {
+  const formik = useFormik({
+    initialValues: {
+      clientName: '',
+      projectName: '',
+      type: '',
+      bookingDate: '',
+      venue: '',
+      contact: '',
+      address: ''
+    },
+    validationSchema: Yup.object({
+      clientName: Yup.string().required("Client Name is required"),
+      projectName: Yup.string().required("Project Name is required"),
+      type: Yup.string(),
+      bookingDate: Yup.string().required("Booking Date is required"),
+      venue: Yup.string(),
+      contact: Yup.string().required("Contact is required"),
+      address: Yup.string()
+    }),
+    onSubmit: async (values) => {
+      console.log(values);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    try {
-      // Handle form submission logic (e.g., send data to the server)
-      console.log('Form submitted:', formData);
-  
-      const response = await axiosInstance.post(
-        URL.POST_CREATE_SINGLE_CLIENT(),
-        formData // Send formData directly
-      );
-      
-      setFormData(response.data)
-      onClose(); // Close modal after submission
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      // Handle error (e.g., show an error message to the user)
+      try {
+        const response = await axiosInstance.post(
+          URL.POST_CREATE_SINGLE_CLIENT(),
+          values
+        );
+        console.log('Form submitted:', response.data);
+        onClose(); // Close modal after submission
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        // Handle error (e.g., show an error message to the user)
+      }
     }
-  };
+  });
 
   return (
     <div className='flex justify-center items-center'>
-    
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl w-[1000px]">
         <div className='flex justify-between'>
           <h2 className="text-lg font-semibold mb-4">Edit Studio Information</h2>
           <div className='px-2 cursor-pointer' onClick={onClose}>&#x274c;</div>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Left Column */}
             <div>
@@ -50,30 +57,49 @@ const ClinetSignup = ({ onClose }) => {
                 <input
                   type="text"
                   name="clientName"
-                  value={formData.clientName}
-                  onChange={handleInputChange}
+                  value={formik.values.clientName}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
+                {formik.touched.clientName && formik.errors.clientName && (
+                  <div style={{ color: 'red', paddingTop: 4 }}>{formik.errors.clientName}</div>
+                )}
               </div>
+
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">Occasion</label>
                 <input
                   type="text"
                   name="projectName"
-                  value={formData.projectName}
-                  onChange={handleInputChange}
+                  value={formik.values.projectName}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
+                {formik.touched.projectName && formik.errors.projectName && (
+                  <div style={{ color: 'red', paddingTop: 4 }}>{formik.errors.projectName}</div>
+                )}
               </div>
-              <div className="">
+
+              <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">Type</label>
-                <input
-                  type="text"
+                <select
                   name="type"
-                  value={formData.type}
-                  onChange={handleInputChange}
+                  value={formik.values.type}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                />
+                >
+                  <option value="" label="Select type" disabled selected />
+                  <option value="Type1" label="Type 1" />
+                  <option value="Type2" label="Type 2" />
+                  <option value="Type3" label="Type 3" />
+                  {/* Add more options as needed */}
+                </select>
+                {formik.touched.type && formik.errors.type && (
+                  <div style={{ color: 'red', paddingTop: 4 }}>{formik.errors.type}</div>
+                )}
               </div>
             </div>
 
@@ -84,44 +110,62 @@ const ClinetSignup = ({ onClose }) => {
                 <input
                   type="date"
                   name="bookingDate"
-                  value={formData.bookingDate}
-                  onChange={handleInputChange}
+                  value={formik.values.bookingDate}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
+                {formik.touched.bookingDate && formik.errors.bookingDate && (
+                  <div style={{ color: 'red', paddingTop: 4 }}>{formik.errors.bookingDate}</div>
+                )}
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Venue</label>
-                <input
-                  type="text"
-                  name="venue"
-                  value={formData.venue}
-                  onChange={handleInputChange}
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                />
-              </div>
+
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">Contact</label>
                 <input
                   type="text"
                   name="contact"
-                  value={formData.contact}
-                  onChange={handleInputChange}
+                  value={formik.values.contact}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
+                {formik.touched.contact && formik.errors.contact && (
+                  <div style={{ color: 'red', paddingTop: 4 }}>{formik.errors.contact}</div>
+                )}
               </div>
-            </div>
-          </div>
+              
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Address</label>
+                <label className="block text-sm font-medium text-gray-700">Venue</label>
                 <input
                   type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
+                  name="venue"
+                  value={formik.values.venue}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
+                {formik.touched.venue && formik.errors.venue && (
+                  <div style={{ color: 'red', paddingTop: 4 }}>{formik.errors.venue}</div>
+                )}
               </div>
 
+            </div>
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Address</label>
+            <textarea
+              name="address"
+              value={formik.values.address}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+              rows="3" // Adjust the number of rows as needed
+            />
+            {formik.touched.address && formik.errors.address && (
+              <div style={{ color: 'red', paddingTop: 4 }}>{formik.errors.address}</div>
+            )}
+          </div>
           <div className="flex justify-end mt-6">
             <button
               type="button"
@@ -143,4 +187,4 @@ const ClinetSignup = ({ onClose }) => {
   );
 };
 
-export default ClinetSignup;
+export default ClientSignup;
