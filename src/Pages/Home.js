@@ -39,6 +39,12 @@ const Home = () => {
     setIsActive(prevState => !prevState);
   };
 
+  const receiveCloseFormToggle = (data)=>{
+    console.log(data);
+    
+    setIsActive(data)
+  }
+
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">Dashboard Content</h2>
@@ -56,7 +62,7 @@ const Home = () => {
           <div className="py-2 px-5 bg-indigo-600 rounded-full text-white" onClick={closeForm}>{isActive ? ("Add Client"): ("Close Form")}</div>
         </div>
           <div className="overflow-x-auto">
-              {isActive ? (<ClientTable client={client} />) : (<ClinetSignup />)}
+              {isActive ? (<ClientTable client={client} />) : (<ClinetSignup onClose={receiveCloseFormToggle} />)}
           </div>
         </div>
       </div>

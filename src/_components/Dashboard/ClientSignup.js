@@ -4,7 +4,8 @@ import * as Yup from 'yup';
 import axiosInstance from '../../Config/axiosConfig';
 import URL from '../../Config/config';
 
-const ClientSignup = ({ onClose }) => {
+const ClientSignup = (props) => {
+  const {onClose} = props
   const formik = useFormik({
     initialValues: {
       clientName: '',
@@ -13,7 +14,7 @@ const ClientSignup = ({ onClose }) => {
       bookingDate: '',
       venue: '',
       contact: '',
-      address: ''
+      description: ''
     },
     validationSchema: Yup.object({
       clientName: Yup.string().required("Client Name is required"),
@@ -22,7 +23,7 @@ const ClientSignup = ({ onClose }) => {
       bookingDate: Yup.string().required("Booking Date is required"),
       venue: Yup.string(),
       contact: Yup.string().required("Contact is required"),
-      address: Yup.string()
+      description: Yup.string()
     }),
     onSubmit: async (values) => {
       console.log(values);
@@ -33,13 +34,16 @@ const ClientSignup = ({ onClose }) => {
           values
         );
         console.log('Form submitted:', response.data);
-        onClose(); // Close modal after submission
+        onClose(false); // Close modal after submission
       } catch (error) {
         console.error('Error submitting form:', error);
         // Handle error (e.g., show an error message to the user)
       }
     }
   });
+
+  console.log(onClose());
+  
 
   return (
     <div className='flex justify-center items-center'>
@@ -92,9 +96,10 @@ const ClientSignup = ({ onClose }) => {
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 >
                   <option value="" label="Select type" disabled selected />
-                  <option value="Type1" label="Type 1" />
-                  <option value="Type2" label="Type 2" />
-                  <option value="Type3" label="Type 3" />
+                  <option value="birthday" label="Birthday" />
+                  <option value="engagement" label="Engagement" />
+                  <option value="wedding" label="Wedding" />
+                  <option value="party" label="Party" />
                   {/* Add more options as needed */}
                 </select>
                 {formik.touched.type && formik.errors.type && (
@@ -153,17 +158,17 @@ const ClientSignup = ({ onClose }) => {
             </div>
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Address</label>
+            <label className="block text-sm font-medium text-gray-700">Description</label>
             <textarea
-              name="address"
+              name="description"
               value={formik.values.address}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
               rows="3" // Adjust the number of rows as needed
             />
-            {formik.touched.address && formik.errors.address && (
-              <div style={{ color: 'red', paddingTop: 4 }}>{formik.errors.address}</div>
+            {formik.touched.description && formik.errors.description && (
+              <div style={{ color: 'red', paddingTop: 4 }}>{formik.errors.description}</div>
             )}
           </div>
           <div className="flex justify-end mt-6">

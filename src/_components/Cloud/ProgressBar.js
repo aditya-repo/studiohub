@@ -12,7 +12,7 @@ const ProgressBar = ({
       <div className="relative w-full">
         {/* Progress Bar */}
 
-        <div className="relative flex mt-2">
+        <div className="relative flex mt-5">
           {/* Background of the progress bar */}
           <div
             className="absolute inset-0 bg-gray-200 rounded-full"
@@ -26,12 +26,12 @@ const ProgressBar = ({
             <span className="sr-only">{progress}% Complete</span>
           </div>
           {/* Tooltip for progress percentage */}
-          {progress < 100 && progress > 0 && (
+          {progress <= 100 && progress > 0 && (
             <div
-              className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gray-700 text-white text-xs rounded p-1"
-              style={{ left: `${progress}%` }}
+              className="absolute -top-7 left-1/2 transform -translate-x-1/2 bg-gray-700 text-white rounded-full py-1 px-2"
+              style={{ left: `${progress}%`, fontSize:11 }}
             >
-              {progress}% uploaded
+              {progress}% 
             </div>
           )}
         </div>

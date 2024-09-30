@@ -96,14 +96,6 @@ const BasicInfo = ({ clientData }) => {
                             </div>
                             <div className="flex px-4 py-3 border-b border-gray-200">
                                 <dt className="text-sm font-medium leading-6 text-gray-900 pr-5">
-                                    Address :
-                                </dt>
-                                <dd className="text-sm leading-6 text-gray-700">
-                                    {clientData.address}
-                                </dd>
-                            </div>
-                            <div className="flex px-4 py-3 border-b border-gray-200">
-                                <dt className="text-sm font-medium leading-6 text-gray-900 pr-5">
                                     Date :
                                 </dt>
                                 <dd className="text-sm leading-6 text-gray-700">

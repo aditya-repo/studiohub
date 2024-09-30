@@ -25,7 +25,7 @@ const ClientTable = ({ client }) => {
             Date
           </th>
           <th className="py-3 px-6 text-left text-sm font-medium text-white w-[15%]">
-            Address
+            Venue
           </th>
           <th className="py-3 px-6 text-left text-sm font-medium text-white w-[8%]">
             Contact

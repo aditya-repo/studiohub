@@ -1,11 +1,12 @@
 import React from "react";
-import ProgressBar from "./ProgressBar"; // Make sure to import your ProgressBar component
+// import ProgressBar from "./ProgressBar"; // Make sure to import your ProgressBar component
+import FileUploadStatus from "./FileUploadStatus";
 
 const FolderList = () => {
   const folders = [
-    { name: "Engagement Day", progress: 70 },
-    { name: "Haldi Ceremony", progress: 100 },
-    { name: "Mehndi Day", progress: 80 },
+    { name: "Engagement Day", fileSize: 7000000000 },
+    { name: "Haldi Ceremony", fileSize: 1000000000 },
+    { name: "Mehndi Day", fileSize: 8000041500 },
   ];
 
   return (
@@ -17,7 +18,7 @@ const FolderList = () => {
         <div key={index} className="flex flex-row items-center mb-4">
           <div className="w-60">{`${index + 1}. ${folder.name}`}</div>
           <div className="flex-1">
-            <ProgressBar progress={folder.progress} />
+            <FileUploadStatus fileSize={folder.fileSize} />
           </div>
         </div>
       ))}
