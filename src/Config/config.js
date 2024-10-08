@@ -31,6 +31,8 @@ const URL = {
   GET_CLIENT_SERVICE: (clientid) => `${BASE}/studio/service/${clientid}`,
   POST_CREATE_SINGLE_CLIENT_SERVICE: (clientid) => `${BASE}/studio/service/${clientid}`,
 
+  GET_UPLOAD_DATA: (clientid)=> `${BASE}/studio/upload-data/${clientid}`,
+
 
   // Admin Routes
 

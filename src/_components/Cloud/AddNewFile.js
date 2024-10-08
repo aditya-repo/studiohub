@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProgressBar from "./ProgressBar"; // Import the ProgressBar component
+import { useParams } from "react-router-dom";
 
 const AddNewFile = () => {
   const [file, setFile] = useState(null);
@@ -8,6 +9,10 @@ const AddNewFile = () => {
   const [uploadedSize, setUploadedSize] = useState(0);
   const [uploadSpeed, setUploadSpeed] = useState(0);
   const [remainingTime, setRemainingTime] = useState(0);
+  const [folderName, setFolderName] = useState("");
+  const [checkFolderinServer, setFolderinServer] = useState(false)
+
+  const {clientid} = useParams()
 
   const chunkSize = 20 * 1024 * 1024; // 20 MB per chunk
   const parallelLimit = 5; // Limit to 5 parallel chunk uploads
@@ -22,6 +27,10 @@ const AddNewFile = () => {
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
+  };
+
+  const handleFolderNameChange = (e) => {
+    setFolderName(e.target.value);
   };
 
   const checkUploadedChunks = async (fileName, totalChunks) => {
@@ -54,16 +63,31 @@ const AddNewFile = () => {
   };
 
   const uploadFile = async () => {
-    if (!file) return;
+    if (!file || !folderName) return;
+
 
     const totalChunks = Math.ceil(file.size / chunkSize);
     const uploadedChunks = await checkUploadedChunks(file.name, totalChunks);
 
+    // Send folder name only once before starting chunk upload
+    const response = await fetch("http://localhost:4000/upload/folder", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({clientid, folderName,  filename: file.name, size: file.size }),
+    });
+
+    const data = await response.json();
+    console.log("found", data.found);
+    
+    setFolderinServer(data.found)
+
+    if (checkFolderinServer === true) return
+    
     let uploadedCount = uploadedChunks.length;
     let chunkIndex = 0;
     let offset = 0;
-    let uploadedBytes = 0;
-    let previousUploadedBytes = 0;
+    let uploadedBytes = uploadedChunks.length * chunkSize; // Initial uploaded bytes
+    let previousUploadedBytes = uploadedBytes;
     let previousTime = Date.now();
 
     const uploadNextBatch = async () => {
@@ -75,6 +99,7 @@ const AddNewFile = () => {
       ) {
         if (uploadedChunks.includes(chunkIndex)) {
           chunkIndex++;
+          offset += chunkSize; // Move the offset if already uploaded
           continue;
         }
 
@@ -84,9 +109,12 @@ const AddNewFile = () => {
             .then(() => {
               uploadedCount++;
               uploadedBytes += chunk.size;
+
+              // Update progress immediately after chunk upload
               const currentTime = Date.now();
               const elapsedTime = (currentTime - previousTime) / 1000;
-              const speed = (uploadedBytes - previousUploadedBytes) / elapsedTime;
+              const speed =
+                (uploadedBytes - previousUploadedBytes) / elapsedTime;
 
               const remainingChunks = totalChunks - uploadedCount;
               const remainingTimeInSeconds =
@@ -126,12 +154,27 @@ const AddNewFile = () => {
 
   return (
     <div>
-      <h1>Chunk File Upload</h1>
-      <div className="flex flex-row gap-6 justify-between items-center mb-3">
-        <div className="flex items-center">
+      <h1>Add New Folder</h1>
+
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-3 space-y-4 md:space-y-0 md:space-x-4">
+        <div className="flex w-full md:w-auto">
+        <div>
+        
+          <input
+            id="folder-name"
+            type="text"
+            placeholder="Folder Name"
+            value={folderName}
+            onChange={handleFolderNameChange}
+            className="mt-2 w-full md:w-72 block rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm h-10"
+          />
+          <div className="text-sm text-red-600 pl-2 pt-1">{checkFolderinServer ? "Folder already found" : ""}</div>
+        </div>
+        </div>
+        <div className="flex flex-col md:flex-row items-start md:items-center w-full md:w-auto">
           <label
             htmlFor="file-upload"
-            className="block text-sm font-medium leading-6 text-gray-900 pr-5 w-30"
+            className="block text-sm font-medium leading-6 text-gray-900 pr-5 w-full md:w-30 mb-2 md:mb-0"
           >
             File Upload
           </label>
@@ -139,13 +182,13 @@ const AddNewFile = () => {
             id="file-upload"
             type="file"
             onChange={handleFileChange}
-            className="mt-2 w-72 block rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm h-10"
+            className="mt-2 w-full md:w-72 block rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm h-10"
           />
         </div>
         <button
           onClick={() => setUploading(true)}
-          className="rounded-md py-2 bg-indigo-800 px-4 text-white h-10 w-48 mt-2"
-          disabled={!file}
+          className="rounded-md py-2 bg-indigo-800 px-4 text-white h-10 w-full md:w-48 mt-2 md:mt-0"
+          disabled={!file || !folderName}
         >
           Upload File
         </button>
