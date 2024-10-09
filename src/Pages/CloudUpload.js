@@ -8,21 +8,35 @@ import { useParams } from "react-router-dom";
 const CloudCard = ({ clientData }) => {
   const [formData, setFormData] = useState({ folder: [] });
   const [canAddFile, setCanAddFile] = useState(false);
+  const [updateEffect, setUpdateEffect] = useState(false);
+
   const { clientid } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosStudioInstance.get(URL.GET_UPLOAD_DATA(clientid));
+        const response = await axiosStudioInstance.get(
+          URL.GET_UPLOAD_DATA(clientid)
+        );
         setFormData(response.data);
-        setCanAddFile(Number(response.data.folder.length) < 10); // Simplified logic
+        setCanAddFile(Number(response.data.folder.length) < 5); // Simplified logic
       } catch (error) {
         console.error("Something went wrong", error);
       }
     };
 
     fetchData();
-  }, [clientid]);
+
+    return () => setUpdateEffect(false);
+  }, [clientid, updateEffect]);
+
+  const handleSubmit = async () => {
+    try {
+      await axiosStudioInstance.post(URL.DECOMPRESSION(clientid));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="flex justify-center">
@@ -33,7 +47,8 @@ const CloudCard = ({ clientData }) => {
               <strong>Cloud Uploads</strong>
             </h2>
             <div>
-              <span className="font-bold">Total File </span>: {formData.folder.length} / 5
+              <span className="font-bold">Total File </span>:{" "}
+              {formData.folder.length} / 5
             </div>
             <div>
               <span className="font-bold">Total Uploaded </span>: 28.92 / 35 GB
@@ -42,12 +57,23 @@ const CloudCard = ({ clientData }) => {
           {canAddFile && ( // Using conditional rendering directly
             <div>
               <div className="my-3 border px-4 py-3 rounded-md">
-                <AddNewFile />
+                <AddNewFile triggerUpdate={() => setUpdateEffect(true)} />
               </div>
               <div className="w-full h-[1px] my-8 border-dashed border-b border-gray-600"></div>
             </div>
           )}
-          <FolderList folders={formData.folder} />
+          <FolderList
+            folders={formData.folder}
+            triggerUpdate={() => setUpdateEffect(true)}
+          />
+          <div className="flex justify-center">
+            <div
+              className="bg-indigo-600 rounded-full px-8 py-2 text-white"
+              onClick={handleSubmit}
+            >
+              Submit
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,11 +1,17 @@
 import React from "react";
 // import ProgressBar from "./ProgressBar"; // Make sure to import your ProgressBar component
 import FileUploadStatus from "./FileUploadStatus";
+import axiosStudioInstance from "../../Config/axiosStudioConfig";
+import { useParams } from "react-router-dom";
+import URL from "../../Config/config";
 
-const FolderList = ({folders}) => {
+const FolderList = ({ folders, triggerUpdate }) => {
+  const { clientid } = useParams();
 
-  console.log(folders);
-  
+  const handleDelete = async (id) => {
+    await axiosStudioInstance.post(URL.DELETE_FOLDER(clientid), { id });
+    triggerUpdate();
+  };
 
   return (
     <div>
@@ -15,7 +21,7 @@ const FolderList = ({folders}) => {
       {folders.map((folder, index) => (
         <div key={folder._id} className="flex flex-row items-center mb-4">
           <div className="w-60">{`${index + 1}. ${folder.foldername}`}</div>
-          <div className="flex-1" id={`${folder._id}`}>
+          <div className="flex-1" onClick={() => handleDelete(folder._id)}>
             <FileUploadStatus fileSize={folder.size} />
           </div>
         </div>
