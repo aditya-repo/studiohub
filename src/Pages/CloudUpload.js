@@ -9,6 +9,7 @@ const CloudCard = ({ clientData }) => {
   const [formData, setFormData] = useState({ folder: [] });
   const [canAddFile, setCanAddFile] = useState(false);
   const [updateEffect, setUpdateEffect] = useState(false);
+  const [folderlimit, setFolderLimit] = useState(0)
 
   const { clientid } = useParams();
 
@@ -51,7 +52,7 @@ const CloudCard = ({ clientData }) => {
               {formData.folder.length} / 5
             </div>
             <div>
-              <span className="font-bold">Total Uploaded </span>: 28.92 / 35 GB
+              <span className="font-bold">Total Uploaded </span>: {folderlimit} GB / 35 GB
             </div>
           </div>
           {canAddFile && ( // Using conditional rendering directly
@@ -65,14 +66,15 @@ const CloudCard = ({ clientData }) => {
           <FolderList
             folders={formData.folder}
             triggerUpdate={() => setUpdateEffect(true)}
+            totalSize = {(data)=>setFolderLimit(data)}
           />
           <div className="flex justify-center">
-            <div
+            <button
               className="bg-indigo-600 rounded-full px-8 py-2 text-white"
               onClick={handleSubmit}
             >
               Submit
-            </div>
+            </button>
           </div>
         </div>
       </div>
