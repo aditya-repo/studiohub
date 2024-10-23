@@ -1,5 +1,8 @@
 // const BASE = "https://backend.photographercompany.com";
+// const BASE = "http://167.71.232.234:4000";
 const BASE = "http://localhost:4000";
+
+export const ROOT_URL = BASE
 
 const URL = {
   BASE: () => BASE,

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ProgressBar from "./ProgressBar"; // Import the ProgressBar component
 import { useParams } from "react-router-dom";
+import { ROOT_URL } from "../../Config/config";
 
-const AddNewFile = ({ triggerUpdate }) => {
+const AddNewFile = ({ triggerUpdate, maxlimit, currentlimit }) => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -11,11 +12,12 @@ const AddNewFile = ({ triggerUpdate }) => {
   const [remainingTime, setRemainingTime] = useState(0);
   const [folderName, setFolderName] = useState("");
   const [checkFolderinServer, setFolderinServer] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // To handle and display error messages
 
   const { clientid } = useParams();
 
-  const chunkSize = 20 * 1024 * 1024; // 20 MB per chunk
-  const parallelLimit = 5; // Limit to 5 parallel chunk uploads
+  const chunkSize = 10 * 1024 * 1024; // 20 MB per chunk
+  const parallelLimit = 10; // Limit to 5 parallel chunk uploads
 
   useEffect(() => {
     if (uploading && file) {
@@ -25,8 +27,40 @@ const AddNewFile = ({ triggerUpdate }) => {
     // eslint-disable-next-line
   }, [uploading, file]);
 
+  // Check if the selected file is a compressed file based on the extension
+  const isCompressedFile = (filename) => {
+    const compressedExtensions = ['.zip', '.rar', '.tar.gz', '.7z', '.gzip'];
+    return compressedExtensions.some(ext => filename.toLowerCase().endsWith(ext));
+  };
+
+  const bytesToGB = (bytes) => {
+    const gb = bytes / (1024 ** 3); 
+    return gb.toFixed(2); 
+  };
+
+  // Handle file selection
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    setErrorMessage(""); // Reset any previous error message
+
+    if (!isCompressedFile(selectedFile.name)) {
+      setErrorMessage("Please select a compressed file (e.g., .zip, .rar, .tar.gz, etc.).");
+      setFile(null);
+      return;
+    }
+
+    console.log('currentsize', Number(currentlimit) + Number(bytesToGB(selectedFile.size)));
+    console.log('allowedsize',maxlimit);
+    
+    
+
+    if ( Number(currentlimit) + Number(bytesToGB(selectedFile.size)) > maxlimit) {
+      setErrorMessage("Package storage limit exceeds, Upgrade Now");
+      setFile(null);
+      return;
+    }
+
+    setFile(selectedFile);
   };
 
   const handleFolderNameChange = (e) => {
@@ -34,7 +68,7 @@ const AddNewFile = ({ triggerUpdate }) => {
   };
 
   const checkUploadedChunks = async (fileName, totalChunks) => {
-    const response = await fetch("http://localhost:4000/upload/check", {
+    const response = await fetch(`${ROOT_URL}/upload/check`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ fileName, totalChunks, clientid }),
@@ -57,7 +91,7 @@ const AddNewFile = ({ triggerUpdate }) => {
     formData.append("totalChunks", totalChunks);
     formData.append("clientid", clientid);
 
-    const response = await fetch("http://localhost:4000/upload", {
+    const response = await fetch(`${ROOT_URL}/upload`, {
       method: "POST",
       body: formData,
     });
@@ -76,7 +110,7 @@ const AddNewFile = ({ triggerUpdate }) => {
     const uploadedChunks = await checkUploadedChunks(file.name, totalChunks);
 
     // Send folder name only once before starting chunk upload
-    const response = await fetch("http://localhost:4000/upload/folder", {
+    const response = await fetch(`${ROOT_URL}/upload/folder`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -186,23 +220,26 @@ const AddNewFile = ({ triggerUpdate }) => {
           </div>
         </div>
         <div className="flex flex-col md:flex-row items-start md:items-center w-full md:w-auto">
-          <label
-            htmlFor="file-upload"
-            className="block text-sm font-medium leading-6 text-gray-900 pr-5 w-full md:w-30 mb-2 md:mb-0"
-          >
-            File Upload
-          </label>
-          <input
-            id="file-upload"
-            type="file"
-            onChange={handleFileChange}
-            className="mt-2 w-full md:w-72 block rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm h-10"
-          />
+          <div>
+            <label
+              htmlFor="file-upload"
+              className="block text-sm font-medium leading-6 text-gray-900 pr-5 w-full md:w-30 mb-2 md:mb-0"
+            >
+              File Upload
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              onChange={handleFileChange}
+              className="mt-2 w-full md:w-72 block rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm h-10"
+            />
+            {errorMessage && <div className="text-sm text-red-600 pl-2 pt-1">{errorMessage}</div>}
+          </div>
         </div>
         <button
           onClick={() => setUploading(true)}
           className="rounded-md py-2 bg-indigo-800 px-4 text-white h-10 w-full md:w-48 mt-2 md:mt-0"
-          disabled={!file || !folderName}
+          disabled={!file || !folderName || !!errorMessage} // Disable if there's an error
         >
           Upload File
         </button>

@@ -13,6 +13,9 @@ const CloudCard = ({ clientData }) => {
 
   const { clientid } = useParams();
 
+  // console.log(formData);
+  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -52,13 +55,13 @@ const CloudCard = ({ clientData }) => {
               {formData.folder.length} / 5
             </div>
             <div>
-              <span className="font-bold">Total Uploaded </span>: {folderlimit} GB / 35 GB
+              <span className="font-bold">Total Uploaded </span>: {folderlimit} GB / {formData.maxupload} GB
             </div>
           </div>
           {canAddFile && ( // Using conditional rendering directly
             <div>
               <div className="my-3 border px-4 py-3 rounded-md">
-                <AddNewFile triggerUpdate={() => setUpdateEffect(true)} />
+                <AddNewFile triggerUpdate={() => setUpdateEffect(true)} maxlimit={formData.maxupload} currentlimit={folderlimit} />
               </div>
               <div className="w-full h-[1px] my-8 border-dashed border-b border-gray-600"></div>
             </div>

@@ -32,7 +32,7 @@ const FileUploadStatus = ({ fileSize, timestamp, deleteme, folderid }) => {
         return `${sizeInMB.toFixed(2)} MB`; // Otherwise, return in MB
       };
 
-      console.log(fileSize);
+    //   console.log(fileSize);
       
     
     return (
